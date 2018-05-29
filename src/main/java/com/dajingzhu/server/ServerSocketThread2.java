@@ -2,7 +2,9 @@ package com.dajingzhu.server;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Map;
 
 public class ServerSocketThread2 extends Thread {
 	private Socket socket;
@@ -14,35 +16,28 @@ public class ServerSocketThread2 extends Thread {
 	@Override
 	public void run() {
 		try {
+		
 			while(true) {
 	         outputStream = socket.getOutputStream();
-	         System.out.println("传输数据连接通道已建立");
-	         final String socketSend = "TCPOK";
+	         final String socketSend = "OK!123";
 		try {
-			  Thread.sleep(10 * 1000);
+			  Thread.sleep(1 * 1000);
               outputStream.write(socketSend.getBytes("UTF-8"));
               outputStream.flush();
+              System.out.println("数据已发送");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("客户端 已断开");
 			outputStream.close();
+			socket.close();
 		}
 			}
 		} catch (Exception e) {
 			try {
 				System.out.println("通道意外关闭");
-				System.out.println("客户端 已断开");
-				socket.close();
 				outputStream.close();
+				socket.close();
 			} catch (IOException e1) {
 				
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-			try {
-				socket.close();
-				outputStream.close();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		

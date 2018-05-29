@@ -9,6 +9,13 @@ public class Environmental_monitoring {
 	private double noise;
 	private double pm2;
 	private double pm10;
+	private String sendtime;
+	public String getSendtime() {
+		return sendtime;
+	}
+	public void setSendtime(String sendtime) {
+		this.sendtime = sendtime;
+	}
 	public int getId() {
 		return id;
 	}
@@ -61,7 +68,7 @@ public class Environmental_monitoring {
 	public String toString() {
 		return "Environmental_monitoring [id=" + id + ", enviromental_id=" + enviromental_id + ", temperature="
 				+ temperature + ", humidity=" + humidity + ", illumination=" + illumination + ", noise=" + noise
-				+ ", pm2=" + pm2 + ", pm10=" + pm10 + "]";
+				+ ", pm2=" + pm2 + ", pm10=" + pm10 + ", sendtime=" + sendtime + "]";
 	}
 	
 }
