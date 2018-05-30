@@ -2,19 +2,18 @@ package com.dajingzhu.server;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Map;
 
-public class ServerSocketThread2 extends Thread {
+public class TemperatureThreadOut extends Thread {
 	private Socket socket;
 	private OutputStream outputStream;
 
-	public ServerSocketThread2(Socket socket) {
+	public TemperatureThreadOut(Socket socket) {
 		this.socket=socket;
 	}
 	@Override
 	public void run() {
+		System.out.println("进入环境发送数据线程");
 		try {
 		
 			while(true) {
@@ -24,7 +23,6 @@ public class ServerSocketThread2 extends Thread {
 			  Thread.sleep(1 * 1000);
               outputStream.write(socketSend.getBytes("UTF-8"));
               outputStream.flush();
-              System.out.println("数据已发送");
 		} catch (Exception e) {
 			System.out.println("客户端 已断开");
 			outputStream.close();

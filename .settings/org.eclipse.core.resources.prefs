@@ -1,8 +1,9 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
-encoding//src/main/java/com/dajingzhu/server/ServerSocketThread.java=UTF-8
-encoding//src/main/java/com/dajingzhu/server/ServerSocketThread2.java=UTF-8
+encoding//src/main/java/com/dajingzhu/server/HatThreadInOut.java=UTF-8
 encoding//src/main/java/com/dajingzhu/server/Socketserver.java=UTF-8
+encoding//src/main/java/com/dajingzhu/server/TemperatureThreadIn.java=UTF-8
+encoding//src/main/java/com/dajingzhu/server/TemperatureThreadOut.java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8
