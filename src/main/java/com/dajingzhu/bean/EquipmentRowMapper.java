@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class EquipmentRowMapper implements RowMapper<Equipment> {
 
-	@Override
 	public Equipment mapRow(ResultSet rs, int rowNum) throws SQLException {
 		  //        获取结果集中的数据
         int id = rs.getInt("id");

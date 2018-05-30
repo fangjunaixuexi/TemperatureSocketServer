@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class Environmental_monitoringRowMapper implements RowMapper<Environmental_monitoring>{
 		 
-		     @Override
 		     public Environmental_monitoring mapRow(ResultSet resultSet, int i) throws SQLException {
 		  //        获取结果集中的数据
 		         int enviromental_id = resultSet.getInt("enviromental_id");

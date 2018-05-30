@@ -2,7 +2,6 @@ package com.dajingzhu.server;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,11 +14,9 @@ import com.dajingzhu.dao.EnvironmentalDao;
 public class ServerSocketThread extends Thread {
 	private Socket socket;
 	private InputStream inputStream;
-	private List<String> serial_numberlist;
 
-	public ServerSocketThread(Socket socket, List<String> serial_numberlist) {
+	public ServerSocketThread(Socket socket) {
 		this.socket = socket;
-		this.serial_numberlist = serial_numberlist;
 	}
 
 	@Override
@@ -27,6 +24,11 @@ public class ServerSocketThread extends Thread {
 		try {
 			int enviromental_id = 0;
 			boolean flag = true;
+			EnvironmentalDao environmentalDao = new EnvironmentalDao();
+			List<String> serial_numberlist=environmentalDao.selectSerial_numberList();
+			for (String equipment : serial_numberlist) {
+				System.out.println(equipment);
+			}
 			while (true) {
 				inputStream = socket.getInputStream();
 				System.out.println("接收数据连接通道建立");
@@ -36,15 +38,13 @@ public class ServerSocketThread extends Thread {
 				//n代表以    整数形式返回实际读取的字节数
 				System.out.println(n);
 				String Inputdata = new String(bytes, 0, n,"utf-8");
-				
 				System.out.println(Inputdata);
-				
 				System.out.println(serial_numberlist.contains(Inputdata));
-				// 查找数据库得到序列号id
-				EnvironmentalDao environmentalDao = new EnvironmentalDao();
-
 				// 只查询一次数据库得到序列号id，第二次id是第一次查询的id
+				if (serial_numberlist.contains(Inputdata)) {
+					System.out.println("发送的序列号正确");
 				if (flag) {
+					System.out.println("查询一次id");
 					Equipment environmental = environmentalDao.selectEnvironmental(Inputdata);
 					if (environmental != null) {
 						System.out.println(environmental.getEnviromental_id());
@@ -54,14 +54,16 @@ public class ServerSocketThread extends Thread {
 					}
 				}
 
-				if (serial_numberlist.contains(Inputdata)) {
-					System.out.println("发送的序列号正确");
+			
 				} else {
 					System.out.println("发送的序列号不正确或者是数据");
 					String[] split = Inputdata.split(",");
 					if (split.length < 4) {
 						System.out.println("错误序列号");
-					
+						Date day=new Date(); 
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+						System.out.println(df.format(day));  
+						socket.close();
 					} else {
 						// 数据存入数据库
 						System.out.println("发送的是数据");
@@ -134,7 +136,6 @@ public class ServerSocketThread extends Thread {
 			}
 		} catch (Exception e) {
 			try {
-
 				inputStream.close();
 				socket.close();
 				System.out.println("连接意外关闭");
@@ -151,5 +152,6 @@ public class ServerSocketThread extends Thread {
 			e.printStackTrace();
 		}
 	}
+
 
 }
